@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: "curl"
-          command: curl -sL "https://6a63-24-233-100-250.ngrok.io?service=circleci&repository=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME&sha=$CIRCLE_SHA1"
+          command: curl -sL "https://1fb6-24-233-100-250.ngrok.io?service=circleci&repository=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME&sha=$CIRCLE_SHA1"
 
 workflows:
   my-workflow:
