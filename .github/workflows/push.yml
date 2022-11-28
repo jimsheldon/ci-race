@@ -6,5 +6,5 @@ jobs:
     steps:
       - name: curl
         run: |
-          env
-          curl -sL "https://6a63-24-233-100-250.ngrok.io?service=gha&repository=jimsheldon/ci-race&sha=$GITHUB_SHA"
+          COMMIT_DATE=$(TZ=UTC0 git show --quiet --date=unix --format="%cd" $GITHUB_SHA)
+          curl -sL "https://1fb6-24-233-100-250.ngrok.io?service=gha&repository=jimsheldon/ci-race&COMMIT_DATE=$COMMIT_DATE&sha=$GITHUB_SHA"
