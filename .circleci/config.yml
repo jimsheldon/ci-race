@@ -9,8 +9,10 @@ jobs:
       - run:
           name: "curl"
           command: |
-            COMMIT_DATE=$(TZ=UTC0 git show --quiet --date=unix --format="%cd" $CIRCLE_SHA1)
-            curl -sL "https://1fb6-24-233-100-250.ngrok.io?service=circleci&repository=jimsheldon/ci-race&commitdate=$COMMIT_DATE&sha=$CIRCLE_SHA1"
+            COMMIT_SECONDS=$(TZ=UTC0 git show --quiet --date=unix --format="%cd" $CIRCLE_SHA1)
+            SINCE_COMMIT=$(expr `date +%s` - $COMMIT_SECONDS)
+            echo $SINCE_COMMIT
+            curl --fail -sL "https://1fb6-24-233-100-250.ngrok.io?service=circleci&repository=jimsheldon/ci-race&sincecommit=$SINCE_COMMIT&sha=$CIRCLE_SHA1"
 
 workflows:
   my-workflow:
