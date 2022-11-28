@@ -4,6 +4,8 @@ jobs:
   curl:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: curl
         run: |
           COMMIT_DATE=$(TZ=UTC0 git show --quiet --date=unix --format="%cd" $GITHUB_SHA)
