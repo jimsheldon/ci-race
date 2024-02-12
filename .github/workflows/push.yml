@@ -1,14 +1,14 @@
-name: curl
+name: info
 on: push
 jobs:
   curl:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: curl
         run: |
-          COMMIT_SECONDS=$(TZ=UTC0 git show --quiet --date=unix --format="%cd" $CIRCLE_SHA1)
-          SINCE_COMMIT=$(expr `date +%s` - $COMMIT_SECONDS)
-          echo $SINCE_COMMIT
-          curl --fail -sL "https://dff2-24-233-100-250.ngrok.io?service=gha&repository=jimsheldon/ci-race&sincecommit=$SINCE_COMMIT&sha=$GITHUB_SHA"
+          COMMIT_SECONDS=$(TZ=UTC0 git show --quiet --date=unix --format="%cd" HEAD)
+          SINCE_COMMIT=$(expr `date --utc +%s` - $COMMIT_SECONDS)
+          NUM_COMMITS=$(git rev-list --count HEAD)
+          echo "$NUM_COMMITS and it has been $SINCE_COMMIT seconds since $COMMIT_SECONDS"
