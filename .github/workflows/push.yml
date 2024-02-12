@@ -31,5 +31,9 @@ jobs:
           SINCE_COMMIT: ${{ steps.info.outputs.SINCE_COMMIT }}
           NUM_COMMITS: ${{ steps.info.outputs.NUM_COMMITS }}
         run: |
-          aws cloudwatch put-metric-data --metric-name RaceCI --namespace Jim --unit Bytes --value $SINCE_COMMIT --dimensions Service=github,CommitNum=$NUM_COMMITS
+          echo SINCE_COMMIT is $SINCE_COMMIT
+          echo NUM_COMMITS is $NUM_COMMITS
+          echo AWS_REGION is $AWS_REGION
           aws sts get-caller-identity
+          aws cloudwatch put-metric-data --metric-name RaceCI --namespace Jim --unit Bytes --value $SINCE_COMMIT --dimensions Service=github,CommitNum=$NUM_COMMITS
+          
