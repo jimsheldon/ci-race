@@ -14,6 +14,8 @@ jobs:
           SINCE_COMMIT=$(expr `date --utc +%s` - $COMMIT_SECONDS)
           NUM_COMMITS=$(git rev-list --count HEAD)
           echo "repo has $NUM_COMMITS commits and it has been $SINCE_COMMIT seconds since the last commit at $COMMIT_SECONDS"
+          echo "SINCE_COMMIT=$SINCE_COMMIT" >> "$GITHUB_OUTPUT"
+          echo "NUM_COMMITS=$NUM_COMMITS" >> "$GITHUB_OUTPUT"
 
       - id: install-aws-cli
         uses: unfor19/install-aws-cli-action@v1
@@ -26,5 +28,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
           AWS_REGION: us-east-2
+          SINCE_COMMIT: ${{ steps.info.outputs.SINCE_COMMIT }}
+          NUM_COMMITS: ${{ steps.info.outputs.NUM_COMMITS }}
         run: |
+          aws cloudwatch put-metric-data --metric-name RaceCI --namespace Jim --unit Bytes --value $SINCE_COMMIT --dimensions Service=github,CommitNum=$NUM_COMMITS
           aws sts get-caller-identity
